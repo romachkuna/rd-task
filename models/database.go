@@ -28,5 +28,9 @@ func NewPostgresDB() error {
 	DB = &PostgresDB{
 		instance: db,
 	}
+	err = db.AutoMigrate(&Request{}, &Response{})
+	if err != nil {
+		return err
+	}
 	return nil
 }

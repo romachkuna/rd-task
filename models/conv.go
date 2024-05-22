@@ -1,7 +1,8 @@
 package models
 
 type ConversionResponse struct {
-	BaseCurrency   int `json:"base_currency"`
-	TargetCurrency int `json:"target_currency"`
-	Amount         int `json:"amount"`
+	BaseCurrency       string  `json:"base_currency"`
+	BaseCurrencyAmount float64 `json:"base_currency_amount"`
+	TargetCurrency     string  `json:"target_currency"`
+	ConvertedAmount    float64 `json:"amount"`
 }
