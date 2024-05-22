@@ -25,6 +25,7 @@ func Convert() fiber.Handler {
 		}
 		r.BaseCurrency = baseCurrency
 		r.TargetCurrency = targetCurrency
+		models.DB.Instance.Create(&r)
 		convertedAmount, err := conversion_api.Fetch(r)
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -37,6 +38,11 @@ func Convert() fiber.Handler {
 			TargetCurrency:     r.TargetCurrency,
 			ConvertedAmount:    convertedAmount,
 		}
+		models.DB.Instance.Create(&models.Response{
+			RequestID:       r.ID,
+			Request:         r,
+			ConvertedAmount: convertedAmount,
+		})
 		return c.Status(fiber.StatusOK).JSON(conversionResponse)
 	}
 }

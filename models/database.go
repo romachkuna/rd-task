@@ -8,11 +8,11 @@ import (
 	"os"
 )
 
-type PostgresDB struct {
-	instance *gorm.DB
-}
+var DB PostgresDB
 
-var DB *PostgresDB
+type PostgresDB struct {
+	Instance *gorm.DB
+}
 
 func NewPostgresDB() error {
 	err := godotenv.Load()
@@ -25,8 +25,8 @@ func NewPostgresDB() error {
 		log.Fatal(err)
 		return err
 	}
-	DB = &PostgresDB{
-		instance: db,
+	DB = PostgresDB{
+		Instance: db,
 	}
 	err = db.AutoMigrate(&Request{}, &Response{})
 	if err != nil {
