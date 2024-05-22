@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"remotedevteam-task/models"
 )
 
@@ -17,13 +18,12 @@ type SuccessResponse struct {
 func Fetch(r models.Request) (float64, error) {
 	baseURL := "https://api.freecurrencyapi.com/v1/latest"
 	params := url.Values{}
-	params.Add("apikey", "fca_live_1pgI4XExLrjB9q7DjEhIUnob1btztjnG2H8JFYgC")
+	params.Add("apikey", os.Getenv("API_KEY"))
 	params.Add("currencies", r.TargetCurrency)
 	params.Add("base_currency", r.BaseCurrency)
 
 	resp, err := http.Get(baseURL + "?" + params.Encode())
 	if err != nil {
-		fmt.Println("Error:", err)
 		log.Fatal(err)
 		return 0, err
 	}

@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
@@ -15,10 +14,6 @@ type PostgresDB struct {
 }
 
 func NewPostgresDB() error {
-	err := godotenv.Load()
-	if err != nil {
-		return err
-	}
 	dsn := os.Getenv("dsn")
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{QueryFields: true})
 	if err != nil {
